@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="410" viewBox="0 0 1200 410" role="img" aria-labelledby="title desc">
+  <title id="title">Fleet</title>
+  <desc id="desc">One task, any coding agent. Durable orchestration for Codex, Claude, Gemini, Copilot, MiMo, and Pi.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071118"/>
+      <stop offset=".55" stop-color="#0B1721"/>
+      <stop offset="1" stop-color="#161126"/>
+    </linearGradient>
+    <radialGradient id="cyan" cx="0" cy="0" r="1" gradientTransform="translate(315 175) rotate(24) scale(420 270)">
+      <stop stop-color="#21C7D9" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#21C7D9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet" cx="0" cy="0" r="1" gradientTransform="translate(1050 60) rotate(140) scale(350 230)">
+      <stop stop-color="#8A63FF" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#8A63FF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#FFFFFF" stroke-opacity=".035"/>
+    </pattern>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#32D6C6"/>
+      <stop offset="1" stop-color="#796CFF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#000" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="410" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="410" rx="24" fill="url(#cyan)"/>
+  <rect width="1200" height="410" rx="24" fill="url(#violet)"/>
+  <rect width="1200" height="410" rx="24" fill="url(#grid)"/>
+  <rect x=".75" y=".75" width="1198.5" height="408.5" rx="23.25" fill="none" stroke="#FFFFFF" stroke-opacity=".12" stroke-width="1.5"/>
+
+  <g transform="translate(68 56)">
+    <g>
+      <rect width="37" height="37" rx="10" fill="url(#accent)"/>
+      <path d="M9 12h19M9 19h14M9 26h9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      <path d="m25 23 3 3 5-7" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="51" y="27" fill="#F8F8FC" font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="26" font-weight="700" letter-spacing="-.6">fleet</text>
+    </g>
+    <text x="0" y="113" fill="#FAFAFF" font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="49" font-weight="730" letter-spacing="-1.9">One task.</text>
+    <text x="0" y="169" fill="#FAFAFF" font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="49" font-weight="730" letter-spacing="-1.9">Any coding agent.</text>
+    <text x="1" y="216" fill="#B9C3CC" font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18">Durable orchestration with automatic failover.</text>
+    <g transform="translate(0 256)" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="650" letter-spacing=".8">
+      <g><rect width="111" height="28" rx="14" fill="#FFFFFF" fill-opacity=".06" stroke="#FFFFFF" stroke-opacity=".1"/><circle cx="15" cy="14" r="3" fill="#32D6C6"/><text x="25" y="18" fill="#D8E0E5">ONE LEDGER</text></g>
+      <g transform="translate(121)"><rect width="127" height="28" rx="14" fill="#FFFFFF" fill-opacity=".06" stroke="#FFFFFF" stroke-opacity=".1"/><circle cx="15" cy="14" r="3" fill="#6CA7FF"/><text x="25" y="18" fill="#D8E0E5">SIX AGENTS</text></g>
+      <g transform="translate(258)"><rect width="135" height="28" rx="14" fill="#FFFFFF" fill-opacity=".06" stroke="#FFFFFF" stroke-opacity=".1"/><circle cx="15" cy="14" r="3" fill="#A58AFF"/><text x="25" y="18" fill="#D8E0E5">VIBEMIN GATED</text></g>
+    </g>
+  </g>
+
+  <g transform="translate(681 56)" filter="url(#shadow)">
+    <rect width="451" height="298" rx="15" fill="#081018" stroke="#FFFFFF" stroke-opacity=".13"/>
+    <path d="M0 47h451" stroke="#FFFFFF" stroke-opacity=".09"/>
+    <circle cx="22" cy="24" r="5" fill="#FF6B6B"/><circle cx="40" cy="24" r="5" fill="#F5BE4F"/><circle cx="58" cy="24" r="5" fill="#5ECF83"/>
+    <text x="225.5" y="29" text-anchor="middle" fill="#707B84" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">example workflow</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13">
+      <text x="22" y="72" fill="#7B8790">IMPLEMENT</text><text x="120" y="72" fill="#32D6C6">codex → claude → copilot</text><text x="120" y="89" fill="#7B8790">→ antigravity → mimo → pi</text>
+      <text x="22" y="109" fill="#7B8790">REVIEW</text><text x="120" y="109" fill="#A58AFF">claude → codex → copilot</text><text x="120" y="126" fill="#7B8790">→ antigravity → mimo → pi</text>
+      <rect x="22" y="133" width="407" height="1" fill="#FFFFFF" fill-opacity=".08"/>
+      <text x="22" y="165" fill="#E7EDF1">checkout-flow</text><text x="169" y="165" fill="#F2B950">codex · working</text>
+      <text x="22" y="194" fill="#E7EDF1">pricing-page</text><text x="169" y="194" fill="#5ECF83">claude · review</text>
+      <text x="22" y="223" fill="#E7EDF1">schema-cleanup</text><text x="169" y="223" fill="#7B8790">antigravity · queued</text>
+      <rect x="22" y="245" width="407" height="1" fill="#FFFFFF" fill-opacity=".08"/>
+      <text x="22" y="276" fill="#32D6C6">●</text><text x="43" y="276" fill="#DDE6EA">one ledger · every handoff survives</text>
+    </g>
+  </g>
+</svg>

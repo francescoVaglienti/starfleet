@@ -1,0 +1,66 @@
+[project]
+name = "fleet-ai"
+version = "0.2.0"
+description = "Durable task orchestration across coding agents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Francesco Vaglienti" }]
+keywords = ["ai", "agents", "claude", "codex", "copilot", "git", "mcp"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Version Control :: Git",
+]
+dependencies = [
+  "mcp>=2.0,<3",
+  "PyYAML>=6,<7",
+  "vibemin>=1.2,<2",
+]
+
+[project.urls]
+Homepage = "https://github.com/francescoVaglienti/starfleet"
+Repository = "https://github.com/francescoVaglienti/starfleet"
+Issues = "https://github.com/francescoVaglienti/starfleet/issues"
+
+[project.scripts]
+fleet = "fleet.cli:entrypoint"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/fleet", "/src", "/bin", "/skill", "/assets", "/scripts", "/tests",
+  "/test-*.ts", "/README.md", "/LICENSE", "/SECURITY.md", "/CONTRIBUTING.md",
+  "/package.json", "/pnpm-lock.yaml", "/tsconfig.json", "/pyproject.toml", "/uv.lock",
+  "/.gitignore", "/.npmignore", "/.github",
+]
+exclude = ["**/__pycache__", "**/*.pyc", "**/.private-denylist"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["fleet"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[dependency-groups]
+dev = [
+  "build>=1.2",
+  "pytest>=8",
+  "ruff>=0.12",
+]

@@ -1,0 +1,11 @@
+.github/
+.venv/
+fleet/
+scripts/
+tests/
+test-*.ts
+pyproject.toml
+uv.lock
+*.tsbuildinfo
+dist/*.whl
+dist/*.tar.gz

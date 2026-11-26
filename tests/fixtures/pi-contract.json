@@ -1,0 +1,160 @@
+[
+  {
+    "name": "complete with tools and usage",
+    "events": [
+      {"type": "session", "version": 3, "id": "contract", "cwd": "/tmp/contract"},
+      {"type": "message_end", "message": {"role": "user", "content": "quota exhausted"}},
+      {"type": "message_update", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "assistantMessageEvent": {"type": "text_delta", "contentIndex": 0, "delta": "duplicate"}},
+      {"type": "tool_execution_start", "toolCallId": "call1", "toolName": "read", "args": {"path": "file.txt"}},
+      {"type": "tool_execution_end", "toolCallId": "call1", "toolName": "read", "isError": true, "result": {"content": [{"type": "text", "text": "quota exhausted unauthorized"}]}},
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": "Complete and intact ."}], "stopReason": "stop", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_end", "willRetry": false, "messages": []},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "types": ["agent.reasoning", "tool.use", "tool.result", "agent.text", "agent.reasoning"],
+    "text": "Complete and intact .",
+    "failure": null,
+    "kind": null
+  },
+  {
+    "name": "quoted diagnostics never trigger failover",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": "No API key found for anthropic. 429 quota exhausted"}], "stopReason": "stop", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 1,
+    "failure": null,
+    "kind": null
+  },
+  {
+    "name": "successful retry clears prior failure",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": ""}], "stopReason": "error", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x", "errorMessage": "429 Too many requests; retry after 2 seconds"}},
+      {"type": "auto_retry_start", "attempt": 1, "errorMessage": "429"},
+      {"type": "auto_retry_end", "success": true, "attempt": 1},
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": "Complete and intact ."}], "stopReason": "stop", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": null,
+    "kind": null
+  },
+  {
+    "name": "rate limit at zero exit",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": ""}], "stopReason": "error", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x", "errorMessage": "429 Too many requests; retry after 2 seconds"}},
+      {"type": "agent_end", "willRetry": true, "messages": []},
+      {"type": "auto_retry_end", "success": false, "finalError": "429 Too many requests; retry after 2 seconds"},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "429 Too many requests; retry after 2 seconds",
+    "kind": "rate_limit",
+    "retryAfterMs": 2000
+  },
+  {
+    "name": "quota before rate limit",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": ""}], "stopReason": "error", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x", "errorMessage": "429 insufficient_quota"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 1,
+    "failure": "429 insufficient_quota",
+    "kind": "quota",
+    "retryAfterMs": 1800000
+  },
+  {
+    "name": "provider auth failure",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": ""}], "stopReason": "error", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x", "errorMessage": "401 invalid API key"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "401 invalid API key",
+    "kind": "auth",
+    "retryAfterMs": 300000
+  },
+  {
+    "name": "observed preflight missing key",
+    "events": [
+      {"type": "session", "version": 3, "id": "contract", "cwd": "/tmp/contract"}
+    ],
+    "stderr": "No API key found for anthropic.",
+    "exitCode": 1,
+    "failure": "pi stream ended without a completed response",
+    "kind": "auth",
+    "retryAfterMs": 300000
+  },
+  {
+    "name": "abort at zero exit",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": "Complete and intact ."}], "stopReason": "stop", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_settled", "aborted": true}
+    ],
+    "exitCode": 0,
+    "failure": "pi aborted",
+    "kind": null
+  },
+  {
+    "name": "agent end is not final",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": "Complete and intact ."}], "stopReason": "stop", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_end", "willRetry": true, "messages": []}
+    ],
+    "exitCode": 0,
+    "failure": "pi stream ended without a completed response",
+    "kind": null
+  },
+  {
+    "name": "provider OAuth refresh failure",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": ""}], "stopReason": "error", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x", "errorMessage": "Token refresh failed: invalid_grant"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "Token refresh failed: invalid_grant",
+    "kind": "auth",
+    "retryAfterMs": 300000
+  },
+  {
+    "name": "output token limit at zero exit",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": "An incomplete answer"}], "stopReason": "length", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "pi response truncated at output token limit",
+    "kind": null
+  },
+  {
+    "name": "deferred response without completion",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [], "stopReason": "deferred", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "pi response deferred without completion",
+    "kind": null
+  },
+  {
+    "name": "malformed provider error payload",
+    "events": [
+      {"type": "message_end", "message": {"role": "assistant", "content": [{"type": "text", "text": ""}], "stopReason": "error", "usage": {"input": 12, "output": 3, "cacheRead": 4, "cacheWrite": 0, "totalTokens": 19, "cost": {"total": 0.001}}, "model": "model-x", "provider": "provider-x", "errorMessage": {"message": "401 invalid API key"}}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "pi error",
+    "kind": null
+  },
+  {
+    "name": "malformed retry error payload",
+    "events": [
+      {"type": "auto_retry_end", "success": false, "finalError": {"message": "429"}},
+      {"type": "agent_settled", "aborted": false}
+    ],
+    "exitCode": 0,
+    "failure": "pi retry failed",
+    "kind": null
+  }
+]

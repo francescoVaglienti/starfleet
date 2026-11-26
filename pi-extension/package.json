@@ -1,0 +1,41 @@
+{
+  "name": "pi-fleet",
+  "version": "0.1.0",
+  "description": "Fleet tools and live delegation activity for the Pi coding agent.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["pi-package", "fleet", "coding-agent"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francescoVaglienti/starfleet.git",
+    "directory": "pi-extension"
+  },
+  "files": ["index.ts", "lib/*.ts", "skills/fleet/SKILL.md", "LICENSE", "README.md"],
+  "pi": {
+    "extensions": ["./index.ts"],
+    "skills": ["./skills"]
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "prepack": "pnpm build && pnpm typecheck"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*",
+    "typebox": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "1.5.2",
+    "@earendil-works/pi-tui": "1.5.2",
+    "@types/node": "^22.10.2",
+    "typebox": "1.3.27",
+    "typescript": "^5.7.2"
+  },
+  "engines": {"node": ">=22"},
+  "packageManager": "pnpm@10.26.1"
+}

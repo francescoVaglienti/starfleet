@@ -1,0 +1,76 @@
+{
+  "name": "fleet-ai",
+  "version": "0.2.0",
+  "description": "Durable task orchestration across coding agents.",
+  "packageManager": "pnpm@10.26.1",
+  "type": "module",
+  "bin": {
+    "fleet": "./bin/fleet"
+  },
+  "files": [
+    "bin/fleet",
+    "assets/fleet-hero.svg",
+    "dist/**/*.js",
+    "skill/SKILL.md",
+    "pi-extension/index.ts",
+    "pi-extension/lib/*.ts",
+    "pi-extension/README.md",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CONTRIBUTING.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francescoVaglienti/starfleet.git"
+  },
+  "pi": {
+    "extensions": [
+      "./pi-extension/index.ts"
+    ],
+    "skills": [
+      "./skill"
+    ]
+  },
+  "homepage": "https://github.com/francescoVaglienti/starfleet#readme",
+  "bugs": "https://github.com/francescoVaglienti/starfleet/issues",
+  "keywords": [
+    "ai",
+    "agents",
+    "claude",
+    "codex",
+    "copilot",
+    "mcp",
+    "git",
+    "vibemin"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "link": "pnpm build && ln -sf \"$PWD/bin/fleet\" $HOME/.local/bin/fleet",
+    "test": "pnpm build && node --test --experimental-strip-types test-cleanup.ts test-parity.ts",
+    "prepack": "pnpm test && sh scripts/check-public.sh"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "yaml": "^2.6.1",
+    "zod": "^3.24.1"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*",
+    "typebox": "*"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-coding-agent": { "optional": true },
+    "@earendil-works/pi-tui": { "optional": true },
+    "typebox": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

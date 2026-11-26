@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Node 22 / Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.1
+
+      - name: Install Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm --dir pi-extension install --frozen-lockfile
+          uv sync --frozen
+
+      - name: Test both runtimes and parity
+        run: |
+          pnpm test
+          pnpm --dir pi-extension typecheck
+          PATH="$PWD/bin:$PATH" pnpm --dir pi-extension test
+          uv run pytest -q
+
+      - name: Check Python style and packages
+        if: matrix.python-version == '3.13'
+        run: |
+          uv run ruff check fleet tests scripts
+          uv run ruff format --check fleet tests scripts
+
+      - name: Check public tree and release packages
+        if: always() && matrix.python-version == '3.13'
+        run: sh scripts/check-public.sh
